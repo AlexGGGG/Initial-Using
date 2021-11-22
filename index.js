@@ -17,42 +17,53 @@ if (req.url === '/') {
                 throw err
 }
 
-        res.end(content)
+            res.end(content)
 }
 )
 } else if (req.url === '/about') {
-fs.readFile(
-    path.join(__dirname, 'views', 'about.html'),
-    'utf-8',
-    (err, content) => {
-        if (err) {
-            throw err
+    fs.readFile(
+        path.join(__dirname, 'views', 'about.html'),
+        'utf-8',
+        (err, content) => {
+            if (err) {
+                throw err
 }
 
-res.end(content)
-    }
-)
+        res.end(content)
 }
-} else if (req.method === 'POST') {
-    const body = []
-    res.writeHead(200, {
-    'Content-Type': 'text/html; charset=utf-8'
-    })
+    )
+     } else if (req.url === '/api/users') {
+            res.writeHead(200, {
+         'Content-Type': 'text/json'
+        })
 
-    req.on('data', data => {
+        const users = [
+        {name: 'Vasya', age: 20},
+        {name: 'Elena', age: 23}
+        ]
+
+        res.end(JSON.stringify(users))
+        }
+        } else if (req.method === 'POST') {
+        const body = []
+        res.writeHead(200, {
+         'Content-Type': 'text/html; charset=utf-8'
+        })
+
+        req.on('data', data => {
         body.push(Buffer.from(data))
-    })
+        })
 
-    req.on('end', () => {
-    const message = body.toString().split('=')[1]
+         req.on('end', () => {
+            const message = body.toString().split('=')[1]
 
-    res.end(`
-        <hl>Ваше сообщение: ${message}</hl>
-    `)
-    })
-}
-})
+        res.end(`
+         <hl>Ваше сообщение: ${message}</hl>
+         `)
+        })
+        }
+        })
 
-    server.listen(3000, () => {
-    console.log('Server is running...')
-    })  
+        server.listen(3000, () => {
+         console.log('Server is running...')
+        })       
