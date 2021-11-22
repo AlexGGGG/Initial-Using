@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
 
     res.end(`
         <div style="background: blue; width: 1px; height: 200px;">
-            <img src="views/webserver/img/1.jpg" width="400" height="300">
+            <img src="webserver/img/1.jpg" width="400" height="300">
             <hr>
         </div>
     `)
